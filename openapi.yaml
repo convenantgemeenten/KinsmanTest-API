@@ -1,0 +1,76 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Wedding-planner Service
+  license:
+    name: MIT
+servers:
+  - url: https://demo.convenantgemeenten.nl/kinsmantest
+paths:
+  /:
+    post:
+      operationId: create
+      description: Returns a boolean result to indicate if the kinsmantest test is positive
+      summary: Executes a kinsman test to validate if a set of subjects have any family relation
+      requestBody:
+        description: Callback payload
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/KinsmanTestRequest'
+      responses:
+        '200':
+          description: agetest response
+          content:
+            '*/*':
+              schema:
+                "$ref": "#/components/schemas/KinsmanTest"
+    get:
+      operationId: list
+      description: Query registered or executed kinsman tests
+      responses:
+        '200':
+          description: List of kinsman tests
+          content:
+            'application/json':
+              schema:
+                type: "array"
+                items: {
+                  $ref: "#/components/schemas/KinsmanTest"
+                }
+components:
+  schemas:
+    KinsmanTestRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        subjects:
+          type: string
+    KinsmanTest:
+      type: object
+      properties:
+        id:
+          type: string
+        subjects:
+          type: "array"
+          items:
+            type: string
+        degree:
+          type: integer
+          format: int32
+        executedOn:
+          type: string
+          format: datetime
+        result:
+          type: boolean
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
