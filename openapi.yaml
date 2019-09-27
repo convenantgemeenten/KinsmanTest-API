@@ -1,7 +1,7 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: Wedding-planner Service
+  title: Kinsman Test Service
   license:
     name: MIT
 servers:
